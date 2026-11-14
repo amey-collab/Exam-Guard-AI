@@ -1,0 +1,603 @@
+{% extends "base.html" %}
+
+{% block title %}ExamGuard AI | Intelligent Exam Integrity Platform{% endblock %}
+
+{% block body_class %}landing-body{% endblock %}
+
+{% block extra_css %}
+<style>
+  .landing-page {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .landing-hero,
+  .landing-section,
+  .landing-cta {
+    position: relative;
+  }
+
+  .landing-hero__panel,
+  .landing-block,
+  .landing-metric,
+  .landing-workflow-card,
+  .landing-feature-card,
+  .landing-preview,
+  .landing-cta__panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.5));
+    box-shadow: 0 24px 60px rgba(2, 8, 23, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .landing-hero__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    min-height: 70vh;
+    align-items: center;
+  }
+
+  .landing-badge,
+  .landing-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(103, 232, 249, 0.25);
+    background: rgba(8, 145, 178, 0.12);
+    color: #9be7ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .landing-badge::before,
+  .landing-kicker::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #67e8f9, #8b5cf6);
+    box-shadow: 0 0 14px rgba(103, 232, 249, 0.65);
+  }
+
+  .landing-hero__title {
+    margin: 1rem 0;
+    font-size: clamp(2.6rem, 6vw, 5.2rem);
+    line-height: 0.98;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #f8fbff;
+  }
+
+  .landing-gradient {
+    background: linear-gradient(135deg, #67e8f9 0%, #a78bfa 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .landing-hero__text,
+  .landing-section__lead,
+  .landing-feature-card p,
+  .landing-workflow-card p,
+  .landing-preview p,
+  .landing-cta__copy p {
+    color: rgba(226, 232, 240, 0.78);
+    line-height: 1.75;
+  }
+
+  .landing-hero__actions,
+  .landing-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.75rem;
+  }
+
+  .landing-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 50px;
+    padding: 0.9rem 1.25rem;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .landing-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .landing-btn--primary {
+    color: #08111f;
+    background: linear-gradient(135deg, #67e8f9, #818cf8);
+    box-shadow: 0 18px 40px rgba(103, 232, 249, 0.22);
+  }
+
+  .landing-btn--secondary {
+    color: #e2e8f0;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .landing-btn--ghost {
+    color: #9be7ff;
+    border: 1px solid rgba(103, 232, 249, 0.2);
+    background: rgba(103, 232, 249, 0.04);
+  }
+
+  .landing-hero__stats,
+  .landing-metrics,
+  .landing-features,
+  .landing-workflow {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .landing-hero__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+  }
+
+  .landing-block {
+    padding: 1.1rem 1.15rem;
+  }
+
+  .landing-block strong {
+    display: block;
+    color: #f8fbff;
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .landing-block span {
+    color: rgba(226, 232, 240, 0.72);
+    font-size: 0.95rem;
+  }
+
+  .landing-preview {
+    padding: 1.2rem;
+    min-height: 100%;
+  }
+
+  .landing-preview__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .landing-preview__title {
+    color: #f8fbff;
+    font-weight: 700;
+  }
+
+  .landing-preview__status {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    color: #86efac;
+    background: rgba(34, 197, 94, 0.12);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .landing-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+
+  .landing-preview__card,
+  .landing-preview__feed {
+    padding: 1rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .landing-preview__card small,
+  .landing-preview__feed span {
+    color: rgba(226, 232, 240, 0.65);
+  }
+
+  .landing-preview__card strong {
+    display: block;
+    color: #f8fbff;
+    font-size: 1.5rem;
+    margin: 0.35rem 0;
+  }
+
+  .landing-preview__radar {
+    min-height: 220px;
+    border-radius: 22px;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at center, rgba(103, 232, 249, 0.18), transparent 45%), rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(103, 232, 249, 0.16);
+  }
+
+  .landing-preview__core,
+  .landing-preview__orbit,
+  .landing-preview__pulse {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+
+  .landing-preview__core {
+    width: 74px;
+    height: 74px;
+    background: radial-gradient(circle, #67e8f9, #6366f1);
+    box-shadow: 0 0 40px rgba(103, 232, 249, 0.35);
+  }
+
+  .landing-preview__orbit {
+    border: 1px solid rgba(103, 232, 249, 0.22);
+  }
+
+  .landing-preview__orbit--one {
+    width: 145px;
+    height: 145px;
+  }
+
+  .landing-preview__orbit--two {
+    width: 220px;
+    height: 220px;
+  }
+
+  .landing-preview__pulse {
+    width: 110px;
+    height: 110px;
+    border: 1px solid rgba(103, 232, 249, 0.28);
+    animation: landingPulse 2.6s infinite ease-out;
+  }
+
+  @keyframes landingPulse {
+    from { transform: translate(-50%, -50%) scale(0.7); opacity: 0.85; }
+    to { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+  }
+
+  .landing-preview__feed {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .landing-preview__feed div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  }
+
+  .landing-preview__feed div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .landing-section {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .landing-section__header {
+    max-width: 760px;
+  }
+
+  .landing-section__title {
+    margin: 0.85rem 0;
+    color: #f8fbff;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.08;
+  }
+
+  .landing-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .landing-metric {
+    padding: 1.4rem;
+  }
+
+  .landing-metric strong {
+    display: block;
+    color: #9be7ff;
+    font-size: 1.9rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .landing-metric span {
+    display: block;
+    color: #f8fbff;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+  }
+
+  .landing-metric p {
+    color: rgba(226, 232, 240, 0.68);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .landing-features {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landing-feature-card,
+  .landing-workflow-card {
+    padding: 1.5rem;
+  }
+
+  .landing-feature-card h3,
+  .landing-workflow-card h3 {
+    color: #f8fbff;
+    margin: 0 0 0.7rem;
+  }
+
+  .landing-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    margin-bottom: 1rem;
+    color: #9be7ff;
+    background: linear-gradient(135deg, rgba(103, 232, 249, 0.14), rgba(139, 92, 246, 0.14));
+    border: 1px solid rgba(103, 232, 249, 0.18);
+    font-size: 1.35rem;
+  }
+
+  .landing-workflow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landing-step {
+    display: inline-flex;
+    margin-bottom: 0.8rem;
+    color: #9be7ff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .landing-cta__panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 2.3rem);
+  }
+
+  .landing-cta__copy h2 {
+    margin: 0.7rem 0;
+    color: #f8fbff;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+  }
+
+  @media (max-width: 1100px) {
+    .landing-hero__panel,
+    .landing-features,
+    .landing-metrics,
+    .landing-workflow,
+    .landing-preview__grid,
+    .landing-cta__panel {
+      grid-template-columns: 1fr;
+    }
+
+    .landing-cta__panel {
+      display: grid;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .landing-hero__actions,
+    .landing-cta__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .landing-btn {
+      width: 100%;
+    }
+
+    .landing-hero__stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+  <section class="landing-hero">
+    <div class="landing-hero__panel">
+      <div>
+        <span class="landing-badge">AI-Powered Exam Integrity</span>
+        <h1 class="landing-hero__title">
+          Protect every assessment with a
+          <span class="landing-gradient">next-generation proctoring experience</span>
+        </h1>
+        <p class="landing-hero__text">
+          ExamGuard AI unifies secure student access, live monitoring, incident visibility,
+          and operational analytics into one futuristic command surface built for trusted online exams.
+        </p>
+
+        <div class="landing-hero__actions">
+          <a href="/student" class="landing-btn landing-btn--primary">Student Login</a>
+          <a href="/admin" class="landing-btn landing-btn--secondary">Admin Console</a>
+          <a href="/test" class="landing-btn landing-btn--ghost">Detection Lab</a>
+        </div>
+
+        <div class="landing-hero__stats">
+          <div class="landing-block">
+            <strong>24/7</strong>
+            <span>Monitoring readiness for remote assessments</span>
+          </div>
+          <div class="landing-block">
+            <strong>Live AI</strong>
+            <span>Behavior intelligence with instant flagging</span>
+          </div>
+          <div class="landing-block">
+            <strong>One Suite</strong>
+            <span>Student, admin, and testing flows in one platform</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-preview" aria-hidden="true">
+        <div class="landing-preview__top">
+          <span class="landing-preview__title">ExamGuard Neural Console</span>
+          <span class="landing-preview__status">Secure Link Active</span>
+        </div>
+
+        <div class="landing-preview__grid">
+          <div class="landing-preview__card">
+            <small>Session Integrity</small>
+            <strong>98.4%</strong>
+            <p>High confidence monitoring signal</p>
+          </div>
+          <div class="landing-preview__card">
+            <small>Threat Response</small>
+            <strong>Realtime</strong>
+            <p>Instant event capture and logging</p>
+          </div>
+
+          <div class="landing-preview__radar">
+            <div class="landing-preview__core"></div>
+            <div class="landing-preview__orbit landing-preview__orbit--one"></div>
+            <div class="landing-preview__orbit landing-preview__orbit--two"></div>
+            <div class="landing-preview__pulse"></div>
+          </div>
+
+          <div class="landing-preview__feed">
+            <div><span>Identity</span><span>Verified</span></div>
+            <div><span>Focus Tracking</span><span>Continuous</span></div>
+            <div><span>Exam State</span><span>Protected</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-section">
+    <div class="landing-section__header">
+      <span class="landing-kicker">Platform Metrics</span>
+      <h2 class="landing-section__title">Built to keep institutions confident during every exam session</h2>
+      <p class="landing-section__lead">
+        From student onboarding to administrator oversight, the platform emphasizes clarity,
+        security, and fast action when integrity events require review.
+      </p>
+    </div>
+
+    <div class="landing-metrics">
+      <article class="landing-metric">
+        <strong>Secure</strong>
+        <span>Authentication flow</span>
+        <p>Students enter validated details and are redirected to the protected exam route only after login succeeds.</p>
+      </article>
+      <article class="landing-metric">
+        <strong>Live</strong>
+        <span>Monitoring insights</span>
+        <p>Continuous detection supports real-time awareness of suspicious activity across active sessions.</p>
+      </article>
+      <article class="landing-metric">
+        <strong>Actionable</strong>
+        <span>Administrative analytics</span>
+        <p>Dashboards, tables, exports, and score summaries help teams move from alert to evidence quickly.</p>
+      </article>
+      <article class="landing-metric">
+        <strong>Flexible</strong>
+        <span>Testing and validation</span>
+        <p>Use the detection lab to validate the vision pipeline and review behavior before broader rollout.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="landing-section">
+    <div class="landing-section__header">
+      <span class="landing-kicker">Core Capabilities</span>
+      <h2 class="landing-section__title">Three focused experiences, one premium proctoring ecosystem</h2>
+      <p class="landing-section__lead">
+        Every route is designed to preserve functionality while making navigation, review, and exam launch feel intuitive.
+      </p>
+    </div>
+
+    <div class="landing-features">
+      <article class="landing-feature-card">
+        <div class="landing-icon">◎</div>
+        <h3>Student Access Portal</h3>
+        <p>Clean, guided login with a direct path into the exam environment for authenticated candidates.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="landing-icon">⬢</div>
+        <h3>Administrative Command Center</h3>
+        <p>Review dashboards, violations, students, and results through a centralized oversight workflow.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="landing-icon">✦</div>
+        <h3>Detection Testing Environment</h3>
+        <p>Open the lab at <code>/test</code> to validate detection behavior against the real backend route.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="landing-section">
+    <div class="landing-section__header">
+      <span class="landing-kicker">Workflow</span>
+      <h2 class="landing-section__title">A simple path from candidate login to monitored completion</h2>
+    </div>
+
+    <div class="landing-workflow">
+      <article class="landing-workflow-card">
+        <span class="landing-step">Step 01</span>
+        <h3>Enter student identity</h3>
+        <p>Candidates provide their full name and registration number to start a session.</p>
+      </article>
+      <article class="landing-workflow-card">
+        <span class="landing-step">Step 02</span>
+        <h3>Validate and launch exam</h3>
+        <p>The application stores the student session and routes the learner to <code>/exam</code> after successful login.</p>
+      </article>
+      <article class="landing-workflow-card">
+        <span class="landing-step">Step 03</span>
+        <h3>Monitor, review, and report</h3>
+        <p>AI detection, violation logs, and dashboard analytics provide the operational evidence institutions need.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="landing-cta">
+    <div class="landing-cta__panel">
+      <div class="landing-cta__copy">
+        <span class="landing-kicker">Launch Now</span>
+        <h2>Start a protected exam session or open the control room</h2>
+        <p>
+          Move directly into the student portal, inspect the admin dashboard,
+          or verify the proctoring pipeline in the live detection lab.
+        </p>
+      </div>
+
+      <div class="landing-cta__actions">
+        <a href="/student" class="landing-btn landing-btn--primary">Go to Student Login</a>
+        <a href="/admin" class="landing-btn landing-btn--secondary">Open Admin</a>
+        <a href="/test" class="landing-btn landing-btn--ghost">Run Detection Test</a>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+<![CDATA[<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ExamGuard Pro{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-ui.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="app-shell {% block body_class %}{% endblock %}">
+  <div class="app-background" aria-hidden="true">
+    <div class="bg-orb orb-cyan"></div>
+    <div class="bg-orb orb-violet"></div>
+    <div class="bg-orb orb-aurora"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <div id="loader" class="loader">
+    <div class="loader-core">
+      <div class="loader-ring loader-ring-outer"></div>
+      <div class="loader-ring loader-ring-inner"></div>
+      <div class="loader-shield">EG</div>
+    </div>
+    <div class="loader-text">Initializing ExamGuard systems...</div>
+    <div class="loader-subtext">Preparing secure exam environment</div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="app-layout">
+    <header class="topbar glass-panel">
+      <div class="topbar-left">
+        <button class="icon-btn menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-sidebar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a href="/" class="brand-mark">
+          <span class="brand-emblem">🛡</span>
+          <span class="brand-copy">
+            <strong>ExamGuard</strong>
+            <small>AI Proctoring Suite</small>
+          </span>
+        </a>
+      </div>
+
+      <div class="topbar-center">
+        <div class="topbar-search glass-input">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="global-search" placeholder="Search students, results, incidents..." aria-label="Global search">
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="status-pill">
+          <span class="status-pulse"></span>
+          <span>Secure Network</span>
+        </div>
+
+        <label class="theme-toggle" title="Toggle theme">
+          <input type="checkbox" class="theme-toggle-input" aria-label="Theme toggle">
+          <span class="theme-toggle-track">
+            <span class="theme-toggle-label theme-toggle-label-sun">☼</span>
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label theme-toggle-label-moon">☾</span>
+          </span>
+        </label>
+
+        {% block header_actions %}{% endblock %}
+      </div>
+    </header>
+
+    <aside id="primary-sidebar" class="sidebar glass-panel" aria-label="Primary navigation">
+      <div class="sidebar-section">
+        <div class="sidebar-caption">Navigation</div>
+        <nav class="sidebar-nav">
+          <a href="/" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+            <span class="nav-icon">◈</span>
+            <span class="nav-copy">
+              <strong>Home</strong>
+              <small>Platform overview</small>
+            </span>
+          </a>
+          <a href="/student" class="nav-link {% if request.endpoint == 'student_login_page' %}active{% endif %}">
+            <span class="nav-icon">◎</span>
+            <span class="nav-copy">
+              <strong>Student Portal</strong>
+              <small>Secure candidate login</small>
+            </span>
+          </a>
+          <a href="/admin" class="nav-link {% if request.endpoint == 'admin_page' %}active{% endif %}">
+            <span class="nav-icon">⬢</span>
+            <span class="nav-copy">
+              <strong>Admin Console</strong>
+              <small>Analytics and controls</small>
+            </span>
+          </a>
+          <a href="/test" class="nav-link {% if request.endpoint == 'test_detection' %}active{% endif %}">
+            <span class="nav-icon">✦</span>
+            <span class="nav-copy">
+              <strong>Detection Lab</strong>
+              <small>Vision test environment</small>
+            </span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section sidebar-metrics">
+        <div class="sidebar-caption">System Status</div>
+        <div class="mini-metric">
+          <span>Monitoring</span>
+          <strong>Active</strong>
+        </div>
+        <div class="mini-metric">
+          <span>Uptime</span>
+          <strong>24/7</strong>
+        </div>
+        <div class="mini-metric">
+          <span>Protection</span>
+          <strong>Realtime</strong>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <main class="main-content">
+        {% block content %}{% endblock %}
+      </main>
+
+      <nav class="mobile-dock glass-panel" aria-label="Quick navigation">
+        <a href="/" class="dock-link {% if request.endpoint == 'index' %}active{% endif %}">
+          <span>◈</span>
+          <small>Home</small>
+        </a>
+        <a href="/student" class="dock-link {% if request.endpoint == 'student_login_page' %}active{% endif %}">
+          <span>◎</span>
+          <small>Student</small>
+        </a>
+        <a href="/admin" class="dock-link {% if request.endpoint == 'admin_page' %}active{% endif %}">
+          <span>⬢</span>
+          <small>Admin</small>
+        </a>
+        <a href="/test" class="dock-link {% if request.endpoint == 'test_detection' %}active{% endif %}">
+          <span>✦</span>
+          <small>Test</small>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <div id="global-modal" class="modal-overlay" aria-hidden="true"></div>
+
+  <script src="{{ url_for('static', filename='js/theme-toggle.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/modern-ui.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>]]>
